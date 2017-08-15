@@ -32,7 +32,7 @@
     </filter>
     <filter>
         <filter-name>Spring OpenEntityManagerinViewFilter</filter-name>
-        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerinViewFilter</filter-class>
+        <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
     </filter>
 
     <!-- Set Filters Mapping -->
