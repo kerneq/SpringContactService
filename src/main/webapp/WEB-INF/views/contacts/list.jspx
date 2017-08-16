@@ -7,6 +7,8 @@
     <jsp:directive.page contentType = "text/html;charset = UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
 
+    <spring:url value = "/contacts" var = "showContactUrl"/>
+
     <spring:message code = "label_contact_list" var = "labelContactList"/>
     <spring:message code = "label_contact_first_name"
                     var = "labelContactFirstName"/>
@@ -35,12 +37,13 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items = "${contacts}" var = "contact">
+            <c:forEach items = "${contacts}" var="contact">
                 <tr>
-                    <td>${contact.firstName}</td>
+                    <td><a href="${showContactUrl}/${contact.id}">
+                        ${contact.firstName}</a></td>
                     <td>${contact.lastName}</td>
-                    <td><joda:format value = "${contact.birthDate}"
-                                     pattern = "yyyy-ММ-dd"/></td>
+                    <td><joda:format value="${contact.birthDate}"
+                                     pattern="yyyy-ММ-dd"/></td>
                 </tr>
             </c:forEach>
             </tbody>
