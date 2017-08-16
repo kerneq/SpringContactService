@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
-       xmlns:tx="http://www.springframework.org/schema/cache"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+<beans xmlns = "http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context = "http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jpa = "http://www.springframework.org/schema/data/jpa"
+       xmlns:tx = "http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/jdbc
+       http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+       http://www.springframework.org/schema/data/jpa
+       http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <jdbc:embedded-database id="dataSource" type="H2">
-        <jdbc:script location="classpath:../resources/sql/schema.sql" />
-        <jdbc:script location="classpath:../resources/sql/test-data.sql"/>
+        <jdbc:script location="META-INF/schema.sql" />
+        <jdbc:script location="META-INF/test-data.sql"/>
     </jdbc:embedded-database>
 
     <bean id = "transactionManager"
@@ -16,11 +26,7 @@
         <property name="entityManagerFactory" ref="emf"/>
     </bean>
 
-    <!--
-    <tx:annotation-driven transaction-manager = "transactionManager" />
-    -->
-
-    <tx:annotation-driven />
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name = "dataSource" ref="dataSource" />
@@ -33,9 +39,9 @@
                 <prop key="hibernate.dialect">
                     org.hibernate.dialect.H2Dialect
                 </prop>
-                <prop key = "hibernate.max_fetch_depth">З</prop>
+                <prop key = "hibernate.max_fetch_depth">3</prop>
                 <prop key="hibernate.jdbc.fetch_size">50</prop>
-                <prop key="hibernate.jdbc.batch_size">lO</prop>
+                <prop key="hibernate.jdbc.batch_size">10</prop>
                 <prop key = "hibernate.show_sql">true</prop>
             </props>
         </property>

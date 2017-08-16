@@ -4,6 +4,7 @@ import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by iters on 8/15/17.
@@ -11,7 +12,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="contact")
-public class Contact {
+public class Contact implements Serializable {
     private Long id;
     private int version;
     private String firstName;
@@ -90,6 +91,7 @@ public class Contact {
         this.photo = photo;
     }
 
+    @Transient
     public String getBirthDateSrtring() {
         String birthDateString = "";
         if (birthDate != null) {
@@ -107,5 +109,4 @@ public class Contact {
                 + ", Last name: " + lastName + ", Birthday: " + birthDate
                 + ", Description: " + description;
     }
-
 }
