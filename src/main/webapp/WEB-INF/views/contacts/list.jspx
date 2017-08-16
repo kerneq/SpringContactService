@@ -2,17 +2,27 @@
 <div xmlns:jsp="http://java.sun.com/JSP/Page"
      xmlns:c = "http://java.sun.com/jsp/jstl/core"
      xmlns:joda = "http://www.joda.org/joda/time/tags"
+     xmlns:spring = "http://www.springframework.org/tags"
      version="2.0">
     <jsp:directive.page contentType = "text/html;charset = UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
-    <hl>Contact Listing</hl>
+
+    <spring:message code = "label_contact_list" var = "labelContactList"/>
+    <spring:message code = "label_contact_first_name"
+                    var = "labelContactFirstName"/>
+    <spring:message code="label_contact_last_name"
+                    var = "labelContactLastName"/>
+    <spring:message code = "label_contact_birth_date"
+                    var = "labelContactBirthDate"/>
+
+    <hl>${labelContactList}</hl>
     <c:if test = "${not empty contacts}">
         <tаblе>
             <thead>
             <tr>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Birth Date</th>
+                <th>${labelContactFirstName}</th>
+                <th>${labelContactLastName}</th>
+                <th>${labelContactBirthDate}</th>
             </tr>
             </thead>
             <tbody>

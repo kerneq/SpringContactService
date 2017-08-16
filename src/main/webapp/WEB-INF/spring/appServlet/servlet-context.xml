@@ -3,6 +3,7 @@
              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
              xmlns:beans="http://www.springframework.org/schema/beans"
              xmlns:context="http://www.springframework.org/schema/context"
+             xmlns:p="http://www.springframework.org/schema/p"
              xsi:schemaLocation="http://www.springframework.org/schema/mvc
              http://www.springframework.org/schema/mvc/spring-mvc.xsd
              http://www.springframework.org/schema/beans
@@ -11,7 +12,9 @@
              http://www.springframework.org/schema/context/spring-context.xsd">
     <annotation-driven />
 
-    <resources mapping = "/resources/**" location = "classpath:../resources/" />
+    <default-servlet-handler/>
+
+    <resources mapping = "/resources/**" location = "/, classpath:../resources/" />
 
     <beans:bean class = "org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name = "prefix" value="/WEB-INF/views/" />
@@ -19,4 +22,20 @@
     </beans:bean>
 
     <context:component-scan base-package = "controller" />
+
+    <interceptors>
+        <beans:bean
+                class = "org.springframework.web.servlet.i18n.LocaleChangeInterceptor"
+                p:paramName = "lang"/>
+    </interceptors>
+
+    <beans:bean class = "org.springframework.context.support.ReloadableResourceBundleMessageSource"
+                id = "messageSource"
+                p:basenames="WEB-INF/i18n/message,WEB-INF/i18n/application"
+                p:fallbackToSystemLocale = "false"/>
+
+    <beans:bean
+            class = "org.springframework.web.servlet.i18n.CookieLocaleResolver"
+            id="localeResolver" p:cookieName="locale"/>
+
 </beans:beans>
