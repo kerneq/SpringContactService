@@ -17,6 +17,7 @@ import util.Message;
 import util.UrlUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,7 +50,7 @@ public class ContactController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST, params = "form")
-    public String update(Contact contact, BindingResult bindingResult,
+    public String update(@Valid Contact contact, BindingResult bindingResult,
                          Model uiModel, HttpServletRequest request,
                          RedirectAttributes redirectAttributes,
                          Locale locale) {
@@ -79,7 +80,7 @@ public class ContactController {
     }
 
     @RequestMapping(params = "form", method = RequestMethod.POST)
-    public String create(Contact contact,
+    public String create(@Valid Contact contact,
                          BindingResult bindingResult,
                          Model uiModel,
                          HttpServletRequest httpServletRequest,
