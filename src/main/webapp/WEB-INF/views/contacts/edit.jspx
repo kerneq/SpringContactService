@@ -13,6 +13,21 @@
         } ) ;
     </script>
 
+    <script type="text/javascript">
+        $(function(){
+            $('#birthDate').datepicker({
+                dateFormat: 'yy-mm-dd',
+                changeYear: true
+            });
+            $ ("#contactDescription").ckeditor (
+                {
+                    toolbar: 'Basic',
+                    uiColor: '#СССССС'
+                }
+            );
+        });
+    </script>
+
     <jsp:directive.page contentType="text/html;charset=UTF-8"/>
     <jsp:output omit-xml-declaration="yes"/>
     <spring:message code = "label_contact_new" var = "labelContactNew"/>
