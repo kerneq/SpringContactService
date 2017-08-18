@@ -3,6 +3,7 @@ package controller;
 import com.google.common.collect.Lists;
 import entity.Contact;
 import interfaces.ContactService;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,10 @@ import util.Message;
 import util.UrlUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -88,7 +92,8 @@ public class ContactController {
                          Model uiModel,
                          HttpServletRequest httpServletRequest,
                          RedirectAttributes redirectAttributes,
-                         Locale locale) {
+                         Locale locale,
+                         @RequestParam(value = "file", required = false) Part file) {
         logger.info("creating contact");
         if(bindingResult.hasErrors()) {
             uiModel.addAttribute("message",
@@ -105,9 +110,29 @@ public class ContactController {
                         messageSource.getMessage("contact_save_success",
                                 new Object[] {}, locale)));
         logger.info("contact id " + contact.getId());
-        contactService.save(contact);
+
+        if (file != null) {
+            logger.info("File name " + file.getName());
+            logger.info("File size " + file.getSize());
+            logger.info("File content type " + file.getContentType());
+            byte[] fileContent = null;
+
+            try {
+                InputStream inputStream = file.getInputStream();
+                if (inputStream == null) {
+                    logger.info("File inputStream is null");
+                }
+                fileContent = IOUtils.toByteArray(inputStream);
+                contact.setPhoto(fileContent);
+            } catch (IOException ex) {
+                logger.info("Error saving file");
+            }
+            contact.setPhoto(fileContent);
+        }
+        contact =  contactService.save(contact);
+
         return "redirect:/contacts/" +
-                UrlUtil.encodeUrlPathSegment(contact.getId() .toString(),
+                UrlUtil.encodeUrlPathSegment(contact.getId().toString(),
                         httpServletRequest);
     }
 
@@ -159,6 +184,18 @@ public class ContactController {
         contactGrid.setTotalRecords((int) contactPage.getTotalElements());
         contactGrid.setContactData(Lists.newArrayList(contactPage.iterator()));
         return contactGrid;
+    }
+
+    @RequestMapping(value = "/photo/{id}", method = RequestMethod.GET)
+    @ResponseBody
+    public byte[] downloadPhoto(@PathVariable("id") Long id) {
+        Contact contact = contactService.findById(id);
+        if (contact.getPhoto() != null) {
+            logger.info("Download photo for id: {} with size {}",
+                    contact.getId(), contact.getPhoto().length);
+        }
+        logger.warn("contact photo " + contact.getPhoto());
+        return contact.getPhoto();
     }
 
     @Autowired

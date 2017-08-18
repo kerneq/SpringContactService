@@ -18,6 +18,8 @@
                     var = "labelContactDescription"/>
     <spring:message code = "label_contact_update" var = "labelContactUpdate"/>
     <spring:message code = "date_format_pattern" var = "dateFormatPattern"/>
+    <spring:message code = "label_contact_photo" var = "labelContactPhoto"/>
+    <spring:url value="/contacts/photo" var = "contactPhotoUrl"/>
     <spring:url value = "/contacts" var = "editContactUrl"/>
     <H1>${labelContactinfo}</H1>
     <div id = "contactinfo">
@@ -41,6 +43,10 @@
             <tr>
                 <td>${labelContactDescription}</td>
                 <td>${contact.description}</td>
+            </tr>
+            <tr>
+                <td>${labelContactPhoto}</td>
+                <td><img src = "${contactPhotoUrl}/${contact.id}" /></td>
             </tr>
         </tаblе>
         <a href="${editContactUrl}/${contact.id}?form">${labelContactUpdate}</a>
