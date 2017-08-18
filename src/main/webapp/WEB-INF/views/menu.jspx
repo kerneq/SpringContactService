@@ -1,4 +1,4 @@
-<?xrnl version = "1.O" encoding="UTF-8" standalone = "no"?>
+<?xrnl version = "1.0" encoding="UTF-8" standalone = "no"?>
 <div id = "menu" xmlns:jsp = "http://java.sun.com/JSP/Page"
      xmlns:c = "http://java.sun.com/jsp/jstl/core"
      xmlns:spring = "http://www.springframework.org/tags"
